@@ -1,2 +1,2 @@
-# Clements_BreathHoldCVR_ML
+# Clements_BH-CVR_PredictedCO2
 Analysis code to accompany publication
