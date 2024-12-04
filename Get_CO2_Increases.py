@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def get_BH_locations(co2_trace_path, peakcheck_path, num_BHs, output_dir, ID=None): 
+def get_BH_locations(co2_trace_path, peakcheck_path, num_BHs, output_dir, co2_column=0, peakcheck_column=0, ID=None): 
     """
     Outputs the start and end indices of each breath hold in a CO2 timeseries, 
     and saves a plot displaying the timeseries with marked breath-hold periods for manual verification.
@@ -9,26 +9,31 @@ def get_BH_locations(co2_trace_path, peakcheck_path, num_BHs, output_dir, ID=Non
     Parameters
     ----------
     co2_trace_path : string
-        Path to an exhaled CO2 timeseries recorded during a breath-hold task.
-
+        Path to an exhaled CO2 timeseries recorded during a breath-hold task
     peakcheck_path : string
-        Path to a binary file consisting of 0s and 1s that is the same length as "co2_trace." This file is typically generated to calculate end-tidal CO2 and contains 1s at the peaks in the CO2 trace and 0s elsewhere.
+        Path to a binary file consisting of 0s and 1s that is the same length as "co2_trace." This file is typically generated to calculate end-tidal CO2 and contains 1s at the peaks in the CO2 trace and 0s elsewhere
     num_BHs : int
         The number of breath holds that were completed
     output_dir : string
         Full path to the output directory
-    ID : string, optional
+    co2_column : int, optional (default value = 0)
+        Column number (indexing starts at 0) in the CO2 timeseries file containing the CO2 timeseries of interest
+    peakcheck_colunmn : int, optional (default value = 0)
+        Column number (indexing starts at 0) in the peakcheck file containing peak information of interest
+    ID : string, optional (default value = None)
         An identifier that can be added to the outputted files (useful if you are running this function for multiple files).
         
     Returns
     -------
-    indices : np.ndarray
+    indices : array
         Start and end indices of each breath hold in co2_trace. In order of BH 1 start, Bh 1 end, BH 2 start, BH 2 end, and so on. 
     
     """
     
     co2_trace = np.loadtxt(co2_trace_path)
+    co2_trace = co2_trace[:,co2_column]
     peakcheck = np.loadtxt(peakcheck_path)
+    peakcheck = peakcheck[:,peakcheck_column]
     BH_locations = np.zeros(num_BHs*2)
     indices_of_ones = [i for i, bit in enumerate(peakcheck) if bit == 1]
     max_distances = []
@@ -64,36 +69,57 @@ def get_BH_locations(co2_trace_path, peakcheck_path, num_BHs, output_dir, ID=Non
     plt.savefig(fig_save_path) 
     return BH_locations
 
-def get_BH_CO2_increases(co2_trace_path, BH_locations, num_BHs): 
+def get_BH_CO2_changes(co2_trace_path, BH_locations, num_BHs, co2_column=0): 
     """
     Given the start and end indices of each breath hold in a PETCO2 timeseries, calculates the CO2 change caused by each breath hold in the timeseries 
     
     Parameters
     ----------
-    co2_trace : string
+    co2_trace_path : string
         Path to an exhaled CO2 timeseries recorded during a breath-hold task.
     BH_locations : np.ndarray
         Start and end indices of each breath hold in co2_trace. In order of BH 1 start, Bh 1 end, BH 2 start, BH 2 end, and so on. Output of get_BH_locations()
     num_BHs : int
         The number of breath holds that were completed
+    co2_column : int, optional (default value = 0)
+        Column number (indexing starts at 0) in CO2 timeseries containing the CO2 timeseries of interest    
         
     Returns
     -------
-    indices : np.ndarray
+    BH_changes : array 
         CO2 change caused by each breath-hold in the timeseries
     
     """
     
     co2_trace = np.loadtxt(co2_trace_path)
-    BH_increases = np.full(num_BHs, np.nan)
+    co2_trace = co2_trace[:,co2_column]
+    BH_changes = np.full(num_BHs, np.nan)
     i=0
     for BH in range(0,2*num_BHs,2):
         BH_start_index = int(BH_locations[BH])
         BH_end_index = int(BH_locations[BH+1])
         co2_value1, co2_value2 = co2_trace[BH_start_index], co2_trace[BH_end_index]
         change_co2 = co2_value2 - co2_value1
-        BH_increases[i] = change_co2
+        BH_changes[i] = change_co2
         i+=1
-    return BH_increases
+    return BH_changes
 
-
+def check_BH_quality(BH_changes,threshold): 
+    """
+    Given a threshold CO2 increase for classifying breath holds as high-quality, and an array of CO2 increases for each breath hold in a timeseries, this function outputs an array with 1s for high-quality breath holds and 0s for low-quality breath holds.
+    
+    Parameters
+    ----------
+    BH_changes : np.ndarray
+        The output of get_BH_CO2_increases(). An array containing the CO2 change caused by each breath hold in a CO2 timeseries.
+    threshold : float or int
+        The threshold CO2 increase for a breath hold to be classified as high-quality.
+        
+    Returns
+    -------
+    quality : array
+        For each high-quality breath hold in BH_changes, contains a 1 if the breath hold is high-quality and a 0 if the breath hold is low-quality.
+    
+    """
+    quality = (BH_changes >= threshold).astype(int)
+    return quality
