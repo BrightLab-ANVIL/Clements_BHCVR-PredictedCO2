@@ -8,7 +8,7 @@ def get_BH_locations(co2_trace_path, peakcheck_path, num_BHs, output_dir, ID=Non
     
     Parameters
     ----------
-    co2_trace : string
+    co2_trace_path : string
         Path to an exhaled CO2 timeseries recorded during a breath-hold task.
 
     peakcheck_path : string
