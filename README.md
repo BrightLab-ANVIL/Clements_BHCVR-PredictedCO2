@@ -19,6 +19,6 @@ The `Model` folder contains code for developing a 1D-FCN to predict end-tidal CO
 * `Run_Cross_Validation.py` contains code to determine optimal model hyperparameters. This script will output a csv file containing the average and standard deviation error terms for each hyperparameter combination across the 5 folds
 * `train_utils.py` contains functions to train and test the model
 * `utils.py` contains a peak detection function
-* `eval_metrics.py` contains functions for calculating evaluation metrics [(source)][(https://github.com/vismayagrawal/RESPCO/blob/main/code/utils.py](https://gist.github.com/bshishov/5dc237f59f019b26145648e2124ca1c9))
+* `eval_metrics.py` contains functions for calculating evaluation metrics [(source)](https://github.com/vismayagrawal/RESPCO/blob/main/code/utils.py)
 # References
 Agrawal, V., Zhong, X. Z., & Chen, J. J. (2023). Generating dynamic carbon-dioxide traces from respiration-belt recordings: Feasibility using neural networks and application in functional magnetic resonance imaging. Frontiers in Neuroimaging, 2. https://doi.org/10.3389/fnimg.2023.1119539
