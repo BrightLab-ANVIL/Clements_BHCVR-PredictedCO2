@@ -1,7 +1,7 @@
 # Quantitative mapping of cerebrovascular reactivity amplitude and delay with breath-hold BOLD fMRI when end-tidal CO<sub>2</sub> quality is low
 This analysis code is being shared to accompany the manuscript available here: https://www.biorxiv.org/content/10.1101/2024.11.18.624159v1
 
-# Code (More to Come)
+# Code
 
 `Check_CO2_quality.py` contains functions that can be used to assess the quality of an exhaled CO<sub>2</sub> timeseries and better understand a participant's compliance during a breath hold task. We recommend using the functions in the following order:
 
