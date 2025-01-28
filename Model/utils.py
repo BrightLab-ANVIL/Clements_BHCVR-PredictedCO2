@@ -13,9 +13,4 @@ def get_peaks(signal, Fs, thres=0.5):
  	peak_index = peakutils.indexes(signal, thres, min_dist=30*Fs)
  	peak_amplitude = signal[peak_index]
 
- 	## Making starting and ending as mean of the data for many different reasons
- 	## like consistent length of RVT and PETCO2 after interpolation
- 	#peak_index = np.array([0, *peak_index, len(signal)])
- 	#peak_amplitude = np.array([np.mean(peak_amplitude), *peak_amplitude, np.mean(peak_amplitude)])
-
  	return peak_index, peak_amplitude
