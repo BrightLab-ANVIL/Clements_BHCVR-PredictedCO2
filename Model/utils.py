@@ -1,4 +1,4 @@
-#This code was developed by Agarwal et al. and is available at: https://github.com/vismayagrawal/RESPCO/tree/main
+#This code was based on code developed by Agarwal et al. available at: https://github.com/vismayagrawal/RESPCO/blob/main/code/utils.py
 #Citation: Agrawal, V., Zhong, X. Z., & Chen, J. J. (2023). Generating dynamic carbon-dioxide traces from respiration-belt recordings: Feasibility using neural networks and application in functional magnetic resonance imaging. Frontiers in Neuroimaging, 2. https://doi.org/10.3389/fnimg.2023.1119539
 
 import numpy as np
