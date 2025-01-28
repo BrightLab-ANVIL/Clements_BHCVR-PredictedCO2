@@ -21,9 +21,9 @@ import utils
 import eval_metrics
 import pandas as pd
 
-splits = '/Users/rgc8669/Documents/CO2_belt/data/splits/delay_corrected_folds'
-output_dir='/Users/rgc8669/Documents/CO2_belt/data/'
-class_num = 57
+splits = ''
+output_dir=''
+class_num = 1
 
 def load_csv(loc):
     
@@ -73,9 +73,6 @@ class resp_co2_dataset():
 loss_function = [1,2,3,4,5]
 epoch_count = [5,10,15,20,25]
 models_list=[1,2,4,6,8,10,12,14]
-loss_function=[1]
-epoch_count=[5]
-models_list=[1]
 datatype=['std']
 row_number = 0
 summed_results = np.zeros((200,11))
