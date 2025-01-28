@@ -16,7 +16,7 @@ This analysis code is being shared to accompany the manuscript available here: h
 
 The `Model` folder contains code for developing a 1D-FCN to predict end-tidal CO<sub>2</sub> from RVT. This code is heavily based on code developed by [Agrawal et al.](https://github.com/vismayagrawal/RESPCO) (see citation below)
 * `models.py` contains the code for the FCN models with 1, 2, 4, 6, 8, 10, 12, and 14 convolutional layers
-* `Run_Cross_Validation.py` contains code to determine optimal model hyperparameters. This script will output a csv file containing the average and standard deviation error terms for each hyperparameter combination across the 5 folds
+* `Run_Cross_Validation.py` contains code to determine optimal model hyperparameters. This script will output a .csv file containing the average and standard deviation error terms for each hyperparameter combination across the 5 folds
 * `train_utils.py` contains functions to train and test the model
 * `utils.py` contains a peak detection function
 * `eval_metrics.py` contains functions for calculating evaluation metrics [(source)](https://github.com/vismayagrawal/RESPCO/blob/main/code/utils.py)
