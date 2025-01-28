@@ -70,10 +70,6 @@ class Trainer():
                         if loss_function == 5:
                             lossFunction=torch.nn.MSELoss()
                             loss = lossFunction(co2_pred,co2) + 2*lossFunction(co2_pred[...,co2_peak_index], co2[...,co2_peak_index])
-                        if loss_function == 6:
-                            loss = torch.mean(torch.abs(co2 - torch.mean(co2))*((co2_pred - co2)**2))
-                        if loss_function == 7:
-                            loss = torch.mean(((co2-co2_pred)/torch.abs(co2))**2)
                         # ## backprop
                         if phase == 'train':
                             loss.backward()
